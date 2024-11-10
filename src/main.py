@@ -1,6 +1,6 @@
-import masks
-import processing
-import widget
+import src.masks
+import src.processing
+import src.widget
 
 
 def start() -> None:
@@ -34,12 +34,12 @@ def start() -> None:
 
     if account_or_card != "0":
         try:
-            account_separated = widget.mask_account_card(account_or_card)
+            account_separated = src.widget.mask_account_card(account_or_card)
             if account_separated[0] == "Счет":
-                print(f"Счёт {masks.get_mask_account(account_separated[1])}")
+                print(f"Счёт {src.masks.get_mask_account(account_separated[1])}")
             else:
                 print(
-                    f"{account_separated[0]} {masks.get_mask_card_number(account_separated[1])}"
+                    f"{account_separated[0]} {src.masks.get_mask_card_number(account_separated[1])}"
                 )
         except Exception:
             print("Что-то пошло не так.")
@@ -49,7 +49,7 @@ def start() -> None:
             "\nВведите неотформатированную строку с датой (0 - пропустить): \n"
         ).strip()
         if date_to_format != "0":
-            print(f"Дата: {widget.get_date(date_to_format)}")
+            print(f"Дата: {src.widget.get_date(date_to_format)}")
     except Exception:
         print("Что-то пошло не так.")
 
@@ -65,13 +65,13 @@ def start() -> None:
     ]
 
     # Фильтруем и получаем новый список словарей по ключу 'state'
-    filtered_list = processing.filter_by_state(dict_to_operate)
-    print(f"Исходный список словарей:\n { dict_to_operate}")
+    filtered_list = src.processing.filter_by_state(dict_to_operate, "CANCELED")
+    print(f"Исходный список словарей:\n {dict_to_operate}")
     print(f"Отфильтрованный список словарей по ключу 'state':\n {filtered_list}")
 
     # Сортируем по ключу 'date'
     print(
-        f"\nОтсортированный список словарей по ключу 'date':\n, {processing.sort_by_date(dict_to_operate)}"
+        f"\nОтсортированный список словарей по ключу 'date':\n, {src.processing.sort_by_date(dict_to_operate, False)}"
     )
 
 
