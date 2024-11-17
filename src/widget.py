@@ -1,16 +1,34 @@
 def mask_account_card(string_: str) -> list:
     """Функция выделяет цифры и буквы из строки."""
     digits_start = 0
+    account = []
     for i in range(len(string_)):
+        # ищем где начинаются цифры
         if string_[i].isdigit():
+            # если нашли позицию начала набора цифр, то запоминаем ее индекс и выходим из цикла
             digits_start = i
             break
 
-    account = []
+    # спикок хранит название карты в позиции 0, и номер карты в позиции 1
     account.append(string_[:digits_start].strip())
     account.append(string_[digits_start:].strip())
 
-    return account
+    if account[0] in [
+        "Счет",
+        "Maestro",
+        "MasterCard",
+        "Visa Platinum",
+        "Visa Classic",
+        "Visa Gold",
+    ]:
+        if len(account[1]) == 16 or len(account[1]) == 20:
+            return account
+        else:
+            raise ValueError("Неверная длина номера счета или карты")
+    elif account == []:
+        raise ValueError("Пустые данные")
+    else:
+        raise ValueError("Несуществующее имя счета или карты")
 
 
 def get_date(date_string: str) -> str:
@@ -20,7 +38,7 @@ def get_date(date_string: str) -> str:
     if date_string.count("-") == 2 and "T" in date_string:
         date_separated = (date_string[: date_string.index("T")]).split("-")
     else:
-        print("Неверный формат данных")
+        raise ValueError("Неверный формат данных")
 
     date_formatted = []
     # проходим по списку в обратном порядке

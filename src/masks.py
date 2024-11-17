@@ -35,4 +35,3 @@ def get_mask_account(account_number: str) -> str:
         return "**" + account_number[-4:]
     else:
         raise ValueError("Нестандартный номер счета, должно быть 20-значное число")
-
