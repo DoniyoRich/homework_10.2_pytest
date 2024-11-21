@@ -41,6 +41,7 @@ def test_mask_account_card_nonst(account_or_card_nonst):
 
 
 def test_get_date(some_date):
+    """Тест на правильность преобразования даты."""
     assert get_date(some_date) == "30.06.2018"
 
 
@@ -56,6 +57,7 @@ def test_get_date(some_date):
     ],
 )
 def test_get_date_wrong(date_wrong):
+    "Тест на корректность форматы даты"
     with pytest.raises(ValueError) as e:
         get_date(date_wrong)
     assert str(e.value) == "Неверный формат данных"

@@ -81,6 +81,22 @@ pip install -r requirements.txt
 {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'}
 ]
 ```
+## Тестирование
+Тестирование функций проводится с помощью фреймворка ***pytest***.
+Для установки наберите в консоли:
+```python
+pip install pytest
+```
+
+
+Добавлены следующие модули для тестирования функций:
+- *test_widget*
+- *test_masks*
+- *test_processing*
+- *test_main*
+
+### **Покрытие тестами (coverage) составляет 94%**.
+
 ## Лицензия
 
 [SkyPro IT School](#)
