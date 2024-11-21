@@ -53,10 +53,6 @@ def start() -> None:
     except Exception:
         print("Что-то пошло не так.")
 
-    # ОТСЮДА НАЧИНАЕТСЯ КОД ДОМАШКИ 10.1
-    # НЕПОНЯТНО, НУЖНО ЛИ БЫЛО ВВОДИТЬ СПИСОК СЛОВАРЕЙ ВРУЧНУЮ
-    # ПОЭТОМУ ПРОПИСАЛ ЕГО ТУТ ТАК ИСХОДНИК ДЛЯ ОБРАБОТКИ
-
     dict_to_operate = [
         {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
         {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
@@ -71,7 +67,7 @@ def start() -> None:
 
     # Сортируем по ключу 'date'
     print(
-        f"\nОтсортированный список словарей по ключу 'date':\n, {src.processing.sort_by_date(dict_to_operate, False)}"
+        f"\nОтсортированный список словарей по ключу 'date':\n, {src.processing.sort_by_date(dict_to_operate, True)}"
     )
 
 
