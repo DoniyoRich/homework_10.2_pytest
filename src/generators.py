@@ -1,12 +1,18 @@
 from collections.abc import Generator
 
 
-def filter_by_currency(list_trans):
-    pass
+def filter_by_currency(list_trans: list[dict], currency: str) -> Generator[dict]:
+    """
+    Функция-генератор возвращает итератор, отфильтрованный по ключу 'currency'
+    """
+    for record in filter(lambda x: x["operationAmount"]["currency"]["code"] == currency, list_trans):
+        yield record
 
 
-def transaction_descriptions(list_trans):
-    pass
+def transaction_descriptions(list_trans: list[dict]) -> Generator[str]:
+    """Функция-генератор возращает текстовое описание транзакции"""
+    for descript_ in map(lambda x: x["description"], list_trans):
+        yield descript_
 
 
 def card_number_generator(start: int, stop: int) -> Generator[str]:
