@@ -1,3 +1,4 @@
+import src.generators
 import src.masks
 import src.processing
 import src.widget
@@ -38,6 +39,14 @@ def start():
     print(
         f"\nОтсортированный список словарей по ключу 'date':\n, {src.processing.sort_by_date(dict_to_operate, True)}"
     )
+
+    # Далее код для домашки 11.1 - Генераторы
+    print()
+
+    start_card = 1
+    stop_card = 3
+    for card_number in src.generators.card_number_generator(start_card, stop_card):
+        print(card_number)
 
 
 if __name__ == "__main__":
