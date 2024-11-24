@@ -5,8 +5,13 @@ def get_mask_card_number(card_number: str) -> str:
     """
 
     numbers_list = list(card_number.strip())
-    for index_ in range(6, 12):
-        numbers_list[index_] = "*"
+    if len(numbers_list) == 0:
+        raise ValueError("Нулевая длина номера карты")
+    elif len(numbers_list) == 16:
+        for index_ in range(6, 12):
+            numbers_list[index_] = "*"
+    else:
+        raise ValueError("Нестандартный номер карты, должно быть 16-значное число")
 
     # проставляем пробелы каждые четыре разряда
     index_ = 4
@@ -23,4 +28,10 @@ def get_mask_account(account_number: str) -> str:
     Принимает на вход номер счета и возвращает его маску
     в формате **XXXX, где X — это цифра номера.
     """
-    return "**" + account_number[-4:]
+    # numbers_list = list(card_number.strip())
+    if len(account_number) == 0:
+        raise ValueError("Нулевая длина номера счета")
+    elif len(account_number) == 20:
+        return "**" + account_number[-4:]
+    else:
+        raise ValueError("Нестандартный номер счета, должно быть 20-значное число")
