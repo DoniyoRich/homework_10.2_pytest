@@ -49,13 +49,13 @@ def start():
     trans_data = src.transactions.transactions
 
     # Получаем итератор, отфильтрованный по ключу 'currency'
-    filtered_by_currency = src.generators.filter_by_currency(trans_data, currency[1])
+
+    filtered_by_currency = src.generators.filter_by_currency(trans_data, currency[0])
     for element in filtered_by_currency:
         print(element)
 
     print()
     # Получаем текстовые описания транзакций
-    trans_data = []
 
     descriptions = src.generators.transaction_descriptions(trans_data)
     for descript_ in descriptions:

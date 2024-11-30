@@ -25,6 +25,7 @@ def list_of_dicts():
         {"id": 615064591, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
     ]
 
+
 @pytest.fixture
 def list_of_transactions():
     return [
@@ -104,6 +105,49 @@ def list_of_transactions():
             "to": "Счет 14211924144426031657"
         }
     ]
+
+
+@pytest.fixture
+def list_of_transactions_curr_empty():
+    return [
+        {
+            "id": 939719570,
+            "state": "EXECUTED",
+            "date": "2018-06-30T02:08:58.425572",
+            "operationAmount": {
+                "amount": "9824.07",
+                "currency": {
+                    "name": "",
+                    "code": ""
+                }
+            },
+            "description": "Перевод организации",
+            "from": "Счет 75106830613657916952",
+            "to": "Счет 11776614605963066702"
+        }
+    ]
+
+
+@pytest.fixture
+def list_of_transactions_no_curr():
+    return [
+        {
+            "id": 939719570,
+            "state": "EXECUTED",
+            "date": "2018-06-30T02:08:58.425572",
+            "operationAmount": {
+                "amount": "9824.07",
+                "currency": {
+                    "name": "EUR",
+                    "code": "EUR"
+                }
+            },
+            "description": "Перевод организации",
+            "from": "Счет 75106830613657916952",
+            "to": "Счет 11776614605963066702"
+        }
+    ]
+
 
 @pytest.fixture
 def list_of_transactions_empty():
