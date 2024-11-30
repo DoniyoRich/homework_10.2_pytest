@@ -1,4 +1,7 @@
-def filter_by_state(dicts_to_filter: list, state: str = "EXECUTED") -> list:
+from typing import Any
+
+
+def filter_by_state(dicts_to_filter: list, state: str = "EXECUTED") -> list[Any] | None:
     """Функция возвращает список словарей по фильтру значения state."""
     filtered_list = []
     for dictionary in dicts_to_filter:
@@ -12,6 +15,7 @@ def filter_by_state(dicts_to_filter: list, state: str = "EXECUTED") -> list:
         return filtered_list
     else:
         print("Некорректный статус")
+        return None
 
 
 def sort_by_date(dicts_to_sort: list, rev_sorted: bool = True) -> list:

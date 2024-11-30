@@ -1,5 +1,7 @@
+import src.generators
 import src.masks
 import src.processing
+import src.transactions
 import src.widget
 
 
@@ -38,6 +40,33 @@ def start():
     print(
         f"\nОтсортированный список словарей по ключу 'date':\n, {src.processing.sort_by_date(dict_to_operate, True)}"
     )
+
+    # Далее код домашки 11.1 - Генераторы
+    print()
+
+    currency = ["USD", "RUB"]
+
+    trans_data = src.transactions.transactions
+
+    # Получаем итератор, отфильтрованный по ключу 'currency'
+
+    filtered_by_currency = src.generators.filter_by_currency(trans_data, currency[0])
+    for element in filtered_by_currency:
+        print(element)
+
+    print()
+    # Получаем текстовые описания транзакций
+
+    descriptions = src.generators.transaction_descriptions(trans_data)
+    for descript_ in descriptions:
+        print(descript_)
+
+    print()
+    # Генерируем номера карт в требуемом диапазоне
+    start_card = 1
+    stop_card = 3
+    for card_number in src.generators.card_number_generator(start_card, stop_card):
+        print(card_number)
 
 
 if __name__ == "__main__":
