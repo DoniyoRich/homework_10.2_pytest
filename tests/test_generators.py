@@ -1,14 +1,22 @@
 import pytest
 
-from src.generators import card_number_generator
+from src.generators import card_number_generator, transaction_descriptions
 
 
 def test_filter_by_currency():
     pass
 
 
-def test_transaction_descriptions():
-    pass
+def test_transaction_descriptions(list_of_transactions):
+    "Тест на правильность получения описания транзакции"
+    for ind, description_received in enumerate(transaction_descriptions(list_of_transactions)):
+        assert description_received == list_of_transactions[ind]["description"]
+
+
+def test_transaction_descriptions_empty(list_of_transactions_empty):
+    "Тест на пустые данные"
+    with pytest.raises(Exception):
+        transaction_descriptions(list_of_transactions_empty)
 
 
 @pytest.mark.parametrize(
@@ -37,6 +45,7 @@ def test_transaction_descriptions():
     ]
 )
 def test_card_number_generator(start_number, stop_number, cards_finished):
+    "Тест на правильность генерирования номера карты"
     card_number = card_number_generator(start_number, stop_number)
 
     for ind, number in enumerate(card_number):
@@ -55,6 +64,7 @@ def test_card_number_generator(start_number, stop_number, cards_finished):
     ]
 )
 def test_card_number_generator_wrong(start_wrong, stop_wrong):
+    "Тест на некорректность диапазона для генерирования карт"
     with pytest.raises(ValueError):
         cards_wrong = card_number_generator(start_wrong, stop_wrong)
         assert next(cards_wrong)

@@ -55,6 +55,8 @@ def start():
 
     print()
     # Получаем текстовые описания транзакций
+    trans_data = []
+
     descriptions = src.generators.transaction_descriptions(trans_data)
     for descript_ in descriptions:
         print(descript_)

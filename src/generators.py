@@ -11,6 +11,13 @@ def filter_by_currency(list_trans: list[dict], currency: str) -> Generator[dict]
 
 def transaction_descriptions(list_trans: list[dict]) -> Generator[str]:
     """Функция-генератор возращает текстовое описание транзакции"""
+    if list_trans == []:
+        print("11111111111111")
+        raise Exception("Неверные или пустые данные")
+        print("222222222222222")
+    print("333333333333333")
+
+
     for descript_ in map(lambda x: x["description"], list_trans):
         yield descript_
 
