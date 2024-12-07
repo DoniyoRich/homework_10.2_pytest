@@ -2,16 +2,20 @@ from functools import wraps
 
 
 def log(filename=None):
+    """ Декоратор выводит результат функции в консоль при отсутствии аргумента filename,
+        и в файл, указанном в аргументе.
+    """
+
     def wrapper(func):
         @wraps(func)
         def inner(*args, **kwargs):
+            start = f"*{func.__name__}* started.\n"
             try:
-                start = f"Function *{func.__name__}* started.\n"
                 result = func(*args, **kwargs)
                 result = f"*{func.__name__}* ok. Result is: {result}\n"
             except ZeroDivisionError as err:
                 result = f"*{func.__name__}* error: {err}. Inputs {args}, {kwargs}\n"
-            stop = f"Function *{func.__name__}* stopped."
+            stop = f"*{func.__name__}* stopped."
             total_str = start + result + stop
             if filename:
                 with open(filename, "w") as f:
@@ -33,4 +37,4 @@ def my_function(x: float, y: float) -> float:
     return x / y
 
 
-my_function(10, 0)
+my_function(6, 2)

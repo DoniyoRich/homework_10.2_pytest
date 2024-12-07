@@ -5,7 +5,7 @@ import src.transactions
 import src.widget
 
 
-def start():
+def start() -> None:
     """
     Основная функция программы. Запрашивает строку,
     содержащую тип и номер карты или счета у Пользователя.

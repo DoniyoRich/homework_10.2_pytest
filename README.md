@@ -95,6 +95,7 @@ pip install pytest
 - *test_processing*
 - *test_main*
 - *test_generators*
+- *test_decorators*
 
 Тесты используют фикстуры из модуля ***conftest.py***, а также параметризацию.
 В докстрингах тестов приведены краткие описания их работы.
