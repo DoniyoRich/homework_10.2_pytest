@@ -1,8 +1,11 @@
+from random import randint
+
 import src.generators
 import src.masks
 import src.processing
 import src.transactions
 import src.widget
+from src.utils import ret_transactions, transaction_amount
 
 
 def start() -> None:
@@ -67,6 +70,21 @@ def start() -> None:
     stop_card = 3
     for card_number in src.generators.card_number_generator(start_card, stop_card):
         print(card_number)
+
+    # Домашка 12.1 JSON, requests, HTTP
+    data_path = '../data/operations.json'
+    # data_path = ''
+
+    # Получаем список словарей из файла json
+    transactions_list = ret_transactions(data_path)
+    print(transactions_list)
+
+    # Получаем какую-нибудь рандомную транзакцию из ранее полученного списка
+    if transactions_list:
+        some_transaction = transactions_list[round(randint(0, len(transactions_list) - 1))]
+        transaction_amount(some_transaction)
+    else:
+        print("Данных нет")
 
 
 if __name__ == "__main__":
