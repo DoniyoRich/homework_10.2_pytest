@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 import pytest
 
 
@@ -152,3 +154,47 @@ def list_of_transactions_no_curr():
 @pytest.fixture
 def list_of_transactions_empty():
     return []
+
+
+@pytest.fixture
+def some_transaction_usd():
+    return {
+        "id": 939719840,
+        "state": "EXECUTED",
+        "date": "2018-06-30T02:08:58.425572",
+        "operationAmount": {
+            "amount": "1500.6",
+            "currency": {
+                "name": "USD",
+                "code": "USD"
+            }
+        },
+        "description": "Перевод организации",
+        "from": "Счет 75106830613657916952",
+        "to": "Счет 11776614605963066702"
+    }
+
+
+@pytest.fixture
+def some_transaction_rub():
+    return {
+        "id": 939719570,
+        "state": "EXECUTED",
+        "date": "2018-06-30T02:08:58.425572",
+        "operationAmount": {
+            "amount": "9824.07",
+            "currency": {
+                "name": "руб.",
+                "code": "RUB"
+            }
+        },
+        "description": "Перевод организации",
+        "from": "Счет 75106830613657916952",
+        "to": "Счет 11776614605963066702"
+    }
+
+
+@pytest.fixture
+def mock_convert_curr():
+    with patch('src.external_api.convert_curr') as mock:
+        yield mock
