@@ -7,7 +7,7 @@ import src.masks
 import src.processing
 import src.transactions
 import src.widget
-from src.utils import transaction_amount, converted_transactions
+from src.utils import converted_transactions, transaction_amount
 
 load_dotenv("../.env")
 

@@ -10,7 +10,7 @@ def converted_transactions(json_path: str) -> list:
         with open(json_path, encoding='utf-8') as data:
             transaction_data = data.read()
         return json.loads(transaction_data)
-    except FileNotFoundError:
+    except Exception:
         print("Что-то не так с файлом, или он пустой")
         return []
 

@@ -1,5 +1,3 @@
-from unittest.mock import patch
-
 import pytest
 
 
@@ -192,9 +190,3 @@ def some_transaction_rub():
         "from": "Счет 75106830613657916952",
         "to": "Счет 11776614605963066702"
     }
-
-
-@pytest.fixture
-def mock_convert_curr():
-    with patch('src.external_api.convert_curr') as mock:
-        yield mock
