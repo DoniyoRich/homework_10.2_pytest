@@ -1,11 +1,15 @@
 from random import randint
 
+from dotenv import load_dotenv
+
 import src.generators
 import src.masks
 import src.processing
 import src.transactions
 import src.widget
-from src.utils import ret_transactions, transaction_amount
+from src.utils import converted_transactions, transaction_amount
+
+load_dotenv("../.env")
 
 
 def start() -> None:
@@ -76,13 +80,12 @@ def start() -> None:
     # data_path = ''
 
     # Получаем список словарей из файла json
-    transactions_list = ret_transactions(data_path)
-    print(transactions_list)
+    transactions_list = converted_transactions(data_path)
 
     # Получаем какую-нибудь рандомную транзакцию из ранее полученного списка
     if transactions_list:
         some_transaction = transactions_list[round(randint(0, len(transactions_list) - 1))]
-        transaction_amount(some_transaction)
+        print(transaction_amount(some_transaction))
     else:
         print("Данных нет")
 
