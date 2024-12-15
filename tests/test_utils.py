@@ -1,6 +1,6 @@
-from unittest.mock import patch, mock_open
+from unittest.mock import mock_open, patch
 
-from src.utils import transaction_amount, converted_transactions
+from src.utils import converted_transactions, transaction_amount
 
 
 @patch("builtins.open", new_callable=mock_open, read_data='[{"amount": 100, "currency": "USD"}]')
@@ -39,7 +39,7 @@ def test_transaction_amount_non_rub_success(mock_convert_curr, some_transaction_
     """ Тест на получение суммы в рублях, если транзакция в иностранной валюте и запрос успешный. """
     mock_convert_curr.return_value = 158388.33
     result = transaction_amount(some_transaction_usd)
-    assert result == f'\nТранзакция ID: 939719840, сумма: 158388.33 RUB'
+    assert result == f"\nТранзакция ID: 939719840, сумма: 158388.33 RUB"
     mock_convert_curr.assert_called_once_with("USD", "RUB", "1500.6")
 
 
@@ -48,4 +48,4 @@ def test_transaction_amount_non_rub_fail(mock_convert_curr, some_transaction_usd
     """ Тест на получение суммы в рублях, если транзакция в иностранной валюте и запрос провален. """
     mock_convert_curr.return_value = -1
     result = transaction_amount(some_transaction_usd)
-    assert result == f'\nТранзакция ID: 939719840, сумма: 1500.6 USD'
+    assert result == f"\nТранзакция ID: 939719840, сумма: 1500.6 USD"
