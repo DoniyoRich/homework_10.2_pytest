@@ -1,10 +1,14 @@
 import csv
 import logging
+import os
 
 import pandas as pd
 
+dir_path = os.path.dirname(os.path.realpath(__file__))
+logs_path = os.path.join(dir_path, '..', 'logs', 'operations.log')
+
 operations_logger = logging.getLogger("operations")
-file_handler = logging.FileHandler("../logs/operations.log", "w", encoding="UTF-8")
+file_handler = logging.FileHandler(logs_path, "w", encoding="UTF-8")
 file_formatter = logging.Formatter('%(asctime)s-%(name)s-%(levelname)s: %(message)s')
 file_handler.setFormatter(file_formatter)
 operations_logger.addHandler(file_handler)
