@@ -1,2 +1,4 @@
-2024-12-19 00:38:45,826-operations-INFO: Успешное чтение файла ../data/transactions.csv
-2024-12-19 00:38:46,441-operations-INFO: Успешное чтение файла ../data/transactions_excel.xlsx
+2024-12-21 14:37:02,792-operations-INFO: Успешное чтение файла ../data/transactions.csv
+2024-12-21 14:37:02,796-operations-INFO: Успешное чтение файла ../data/transactions.csv
+2024-12-21 14:37:02,797-operations-ERROR: Ошибка чтения файла ../data/transactions.csv
+2024-12-21 14:37:02,799-operations-INFO: Успешное чтение файла ../data/transactions.xlsx

@@ -4,7 +4,7 @@ import logging
 import pandas as pd
 
 operations_logger = logging.getLogger("operations")
-file_handler = logging.FileHandler(f"../logs/operations.log", "w", encoding="UTF-8")
+file_handler = logging.FileHandler("../logs/operations.log", "w", encoding="UTF-8")
 file_formatter = logging.Formatter('%(asctime)s-%(name)s-%(levelname)s: %(message)s')
 file_handler.setFormatter(file_formatter)
 operations_logger.addHandler(file_handler)
