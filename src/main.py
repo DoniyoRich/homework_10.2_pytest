@@ -7,6 +7,7 @@ import src.masks
 import src.processing
 import src.transactions
 import src.widget
+from src.operations import read_from_csv, read_from_excel
 from src.utils import converted_transactions, transaction_amount
 
 load_dotenv("../.env")
@@ -88,6 +89,18 @@ def start() -> None:
         print(transaction_amount(some_transaction))
     else:
         print("Данных нет")
+
+    # Домашка по csv и pandas
+    print()
+    start_dir = '../data/'
+    files_to_read = ['transactions.csv', 'transactions_excel.xlsx']
+
+    csv_dataset = read_from_csv(start_dir + files_to_read[0])
+    print(csv_dataset)
+    print()
+
+    excel_dataset = read_from_excel(start_dir + files_to_read[1])
+    print(excel_dataset)
 
 
 if __name__ == "__main__":
