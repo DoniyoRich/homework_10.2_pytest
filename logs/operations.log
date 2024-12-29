@@ -1,8 +1,0 @@
-2024-12-21 21:50:38,001-operations-ERROR: Ошибка чтения файла ../data/transactions.csv
-2024-12-21 21:50:38,002-operations-ERROR: Ошибка чтения файла ../data/transactions_excel.xlsx
-2024-12-21 21:50:38,046-operations-INFO: Успешное чтение файла ../data/transactions.csv
-2024-12-21 21:50:38,051-operations-INFO: Успешное чтение файла ../data/transactions.csv
-2024-12-21 21:50:38,053-operations-ERROR: Ошибка чтения файла ../data/transactions.csv
-2024-12-21 21:50:38,055-operations-INFO: Успешное чтение файла ../data/transactions_excel.xlsx
-2024-12-21 21:50:38,060-operations-INFO: Успешное чтение файла ../data/transactions_excel.xlsx
-2024-12-21 21:50:38,062-operations-ERROR: Ошибка чтения файла ../data/transactions_excel.xlsx

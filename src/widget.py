@@ -9,26 +9,28 @@ def mask_account_card(string_: str) -> list:
             digits_start = i
             break
 
-    # спикок хранит название карты в позиции 0, и номер карты в позиции 1
+    # спиcок хранит название карты в позиции 0, и номер карты в позиции 1
     account.append(string_[:digits_start].strip())
     account.append(string_[digits_start:].strip())
 
-    if account[0] in [
-        "Счет",
-        "Maestro",
-        "MasterCard",
-        "Visa Platinum",
-        "Visa Classic",
-        "Visa Gold",
-    ]:
-        if len(account[1]) == 16 or len(account[1]) == 20:
-            return account
-        else:
-            raise ValueError("Неверная длина номера счета или карты")
-    elif account == []:
-        raise ValueError("Пустые данные")
-    else:
-        raise ValueError("Несуществующее имя счета или карты")
+    return account
+
+    # if account[0] in [
+    #     "Счет",
+    #     "Maestro",
+    #     "MasterCard",
+    #     "Visa Platinum",
+    #     "Visa Classic",
+    #     "Visa Gold",
+    # ]:
+    #     if len(account[1]) == 16 or len(account[1]) == 20:
+    #         return account
+    #     else:
+    #         raise ValueError("Неверная длина номера счета или карты")
+    # elif account == []:
+    #     raise ValueError("Пустые данные")
+    # else:
+    #     raise ValueError("Несуществующее имя счета или карты")
 
 
 def get_date(date_string: str) -> str:

@@ -8,14 +8,15 @@ def filter_by_state(dicts_to_filter: list, state: str = "EXECUTED") -> list[Any]
         try:
             if dictionary["state"] == state:
                 filtered_list.append(dictionary)
+                print(dictionary)
+                # input()
         except KeyError:
-            print("Некорректный статус")
+            continue
 
     if filtered_list != []:
         return filtered_list
-    else:
-        print("Некорректный статус")
-        return None
+
+    return []
 
 
 def sort_by_date(dicts_to_sort: list, rev_sorted: bool = True) -> list:
