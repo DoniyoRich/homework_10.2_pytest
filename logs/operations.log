@@ -1,0 +1,10 @@
+2024-12-30 13:51:20,004-operations-INFO: Успешное чтение файла D:\PythonProjects\homework_11.2_decorators\data\transactions.csv
+2024-12-30 13:51:20,989-operations-INFO: Успешное чтение файла D:\PythonProjects\homework_11.2_decorators\data\transactions_excel.xlsx
+2024-12-30 13:51:21,004-operations-INFO: Успешное чтение файла D:\PythonProjects\homework_11.2_decorators\data\transactions.csv
+2024-12-30 13:51:21,004-operations-INFO: Успешное чтение файла D:\PythonProjects\homework_11.2_decorators\data\transactions.csv
+2024-12-30 13:51:21,176-operations-INFO: Успешное чтение файла ../data/transactions.csv
+2024-12-30 13:51:21,192-operations-INFO: Успешное чтение файла ../data/transactions.csv
+2024-12-30 13:51:21,192-operations-ERROR: Ошибка чтения файла  
+2024-12-30 13:51:21,192-operations-INFO: Успешное чтение файла ../data/transactions_excel.xlsx
+2024-12-30 13:51:21,208-operations-INFO: Успешное чтение файла 
+2024-12-30 13:51:21,208-operations-ERROR: Ошибка чтения файла owiueyr.xlsx 

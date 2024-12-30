@@ -28,7 +28,7 @@ def test_read_from_csv_empty(mock_file):
 @patch("builtins.open", side_effect=FileNotFoundError)
 def test_read_from_csv_no_file(mock_file):
     """ Тест на отсутствие файла формата csv. """
-    mock_no_file = read_from_csv("../data/transactions.csv")
+    mock_no_file = read_from_csv("")
     assert mock_no_file == []
 
 
@@ -56,12 +56,12 @@ def test_read_from_excel(mock_excel_file):
 @patch("builtins.open", new_callable=mock_open, read_data='')
 def test_read_from_excel_empty(mock_file):
     """ Тест проверки считывания пустого файла формата excel. """
-    mock_csv_file = read_from_csv("../data/transactions_excel.xlsx")
+    mock_csv_file = read_from_csv("")
     assert mock_csv_file == []
 
 
 @patch("builtins.open", side_effect=FileNotFoundError)
 def test_read_from_excel_no_file(mock_file):
     """ Тест на отсутствие файла формата excel. """
-    mock_no_file = read_from_csv("../data/transactions_excel.xlsx")
+    mock_no_file = read_from_csv('owiueyr.xlsx')
     assert mock_no_file == []

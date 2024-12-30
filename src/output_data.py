@@ -1,3 +1,6 @@
+from collections import Counter
+from typing import Any
+
 from src.masks import get_mask_account, get_mask_card_number
 from src.widget import get_date, mask_account_card
 
@@ -6,6 +9,7 @@ def format_output(dict_to_process: dict, amount: str, description: str, currency
     """ Функция форматирует вывод"""
     print("-" * 40)
     print(get_date(dict_to_process['date']), description)
+    print("Статус транзакции: ", dict_to_process['state'])
 
     if description.lower() == "открытие вклада":
         account_separated = mask_account_card(dict_to_process['to'])
@@ -35,10 +39,10 @@ def format_output(dict_to_process: dict, amount: str, description: str, currency
     print("Сумма: ", amount, currency)
 
 
-def print_formatted(transactions: list, file_type: str) -> None:
-    """ Функция выводит данные в заданном формате. """
+def print_formatted(transactions: list[Any], file_type: str | None) -> None:
+    """ Функция готовит данные в зависимости от формата файла для печати в заданном формате. """
     for trans in transactions:
-        if file_type.lower() == 'json':
+        if file_type == 'JSON':
             amount = trans["operationAmount"]['amount']
             description = trans['description']
             currency = trans["operationAmount"]["currency"]["name"]
@@ -49,3 +53,10 @@ def print_formatted(transactions: list, file_type: str) -> None:
             currency = trans["currency_name"]
 
         format_output(trans, amount, description, currency)
+
+
+def get_descriptions(transactions: list[dict], descr: str) -> dict:
+    """ Функция печатает категории и их количество. """
+    descriptions = [x[descr] for x in transactions]
+    categories = Counter(descriptions)
+    return dict(categories)

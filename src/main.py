@@ -1,13 +1,11 @@
-import logging
 import os
 from pathlib import Path
 
 from dotenv import load_dotenv
 
 import src.processing
-import src.transactions
 from src.operations import read_from_csv, read_from_excel
-from src.output_data import print_formatted
+from src.output_data import get_descriptions, print_formatted
 from src.regex_searching import search_by_pattern
 from src.utils import converted_transactions
 
@@ -16,33 +14,10 @@ BASE_DIR = str(Path(__file__).parent.parent)
 logs_path = os.path.join(dir_path, '..', 'logs', 'main.log')
 transactions_path = BASE_DIR + '\\data'
 
-main_logger = logging.getLogger("main")
-file_handler = logging.FileHandler(logs_path, "w", encoding="UTF-8")
-file_formatter = logging.Formatter('%(asctime)s-%(name)s-%(levelname)s: %(message)s')
-file_handler.setFormatter(file_formatter)
-main_logger.addHandler(file_handler)
-main_logger.setLevel(logging.DEBUG)
-
 load_dotenv(BASE_DIR + '\\.env')
 
 file_types = {"1": "JSON", "2": "CSV", "3": "XLSX"}
 transaction_status = ["EXECUTED", "CANCELED", "PENDING"]
-
-
-def user_input(message: str, answers: list) -> str:
-    user_choice = '0'
-    while user_choice == '0':
-        try:
-            user_choice = input(message)
-            if user_choice.upper() in answers:
-                return user_choice
-            else:
-                continue
-        except Exception:
-            print("Некорректный ввод, попробуйте еще раз, или 0 для завершения")
-            continue
-
-    return user_choice
 
 
 def main() -> None:
@@ -82,8 +57,8 @@ def main() -> None:
             file = r'\transactions_excel.xlsx'
             transactions_list = read_from_excel(transactions_path + file)
 
-        print(
-            """Введите статус, по которому необходимо выполнить фильтрацию. Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING (0 для выхода)""")
+        print("Введите статус, по которому необходимо выполнить фильтрацию. "
+              "Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING (0 для выхода)")
 
         transaction_status_choice = '0'
         while True:
@@ -96,7 +71,8 @@ def main() -> None:
                 continue
             else:
                 print(
-                    f"Статус операции '{transaction_status_choice}' недоступен, попробуйте еще раз, или 0 для завершения")
+                    f"Статус операции '{transaction_status_choice}' недоступен",
+                    "попробуйте еще раз, или 0 для завершения")
                 continue
 
         if not transaction_status_choice == '0':
@@ -104,14 +80,13 @@ def main() -> None:
             current_state_of_transactions_list = filtered_by_state
             if filtered_by_state:
                 print(f"Операции отфильтрованы по статусу '{transaction_status_choice}'")
-                is_sorted_by_date = input("\nОтсортировать операции по дате? да/нет(Enter): ")
-                if is_sorted_by_date.lower() == "да" or is_sorted_by_date.lower() == "lf":
-                    is_sorted_by_date = True
+                is_sorted_by_date_mes = input("\nОтсортировать операции по дате? да/нет(Enter): ")
+                if is_sorted_by_date_mes.lower() == "да" or is_sorted_by_date_mes.lower() == "lf":
 
                     print("Сортировка по дате: да")
 
-                    is_sort_ascending = input("\nПо возрастанию: да/нет(Enter): ")
-                    if is_sort_ascending.lower() == "да" or is_sort_ascending.lower() == "lf":
+                    is_sort_ascending_mes = input("\nПо возрастанию: да/нет(Enter): ")
+                    if is_sort_ascending_mes.lower() == "да" or is_sort_ascending_mes.lower() == "lf":
                         is_sort_ascending = False
                         print("Выбрана сортировка по возрастанию")
                     else:
@@ -128,9 +103,8 @@ def main() -> None:
                     print("Только рублевые транзакции: да")
                     filtered_only_rubles = current_state_of_transactions_list
                     if file_types.get(source_file_choice) == "JSON":
-                        current_state_of_transactions_list = list(filter(
-                            lambda x: x['operationAmount']['currency']['code'] == 'RUB',
-                            filtered_only_rubles))
+                        current_state_of_transactions_list = list(
+                            filter(lambda x: x['operationAmount']['currency']['code'] == 'RUB', filtered_only_rubles))
                     else:
                         current_state_of_transactions_list = list(filter(
                             lambda x: x['currency_code'] == 'RUB',
@@ -146,24 +120,22 @@ def main() -> None:
                 else:
                     print("Поиск по определенному шаблону не производится")
 
-                descriptions = [x["description"] for x in current_state_of_transactions_list]
+                categories = get_descriptions(current_state_of_transactions_list, 'description')
 
-                if len(descriptions):
+                if len(categories):
                     print("\nРаспечатываю итоговый список транзакций")
-                    print(f'Всего банковских операций в выборке: {len(descriptions)}')
+                    print(f'Всего банковских операций в выборке: {sum(categories.values())}')
+                    # categories = get_descriptions(current_state_of_transactions_list)
+                    for key, value in categories.items():
+                        print(f"{key}: {value}")
+
                     print_formatted(current_state_of_transactions_list, file_types.get(source_file_choice))
                 else:
-                    print(f'\nНе найдено ни одной транзакции, подходящей под ваши условия фильтрации')
+                    print('\nНе найдено ни одной транзакции, подходящей под ваши условия фильтрации')
 
             else:
                 print("-" * 40)
                 print(f"Транзакции со статусом {transaction_status_choice} отсутствуют")
-
-    # Генерируем номера карт в требуемом диапазоне
-    # start_card = 1
-    # stop_card = 3
-    # for card_number in src.generators.card_number_generator(start_card, stop_card):
-    #     print(card_number)
 
 
 if __name__ == "__main__":

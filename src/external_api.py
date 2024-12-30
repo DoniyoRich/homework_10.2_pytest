@@ -10,7 +10,8 @@ def convert_curr(from_: str, to_: str, trans_amount: str) -> float:
     print(f"\nТранзакция в {from_}, производится конвертация, может занять некоторое время...")
 
     response = requests.get(
-        f'https://api.apilayer.com/exchangerates_data/convert?to={to_}&from={from_}&amount={trans_amount}&apikey={API_KEY}')
+        f'https://api.apilayer.com/exchangerates_data/convert?to=]\
+        {to_}&from={from_}&amount={trans_amount}&apikey={API_KEY}')
 
     if response.status_code == 200:
         currency_rate = response.json()['info']['rate']

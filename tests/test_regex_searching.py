@@ -1,42 +1,42 @@
-from unittest.mock import patch
+import pytest
 
 from src.regex_searching import search_by_pattern
 
 
-@patch('src.regex_searching.re.search')
-def test_search_by_pattern(mocked_re, list_of_transactions):
-    mocked_re.return_value.span.return_value = (1, 5) # ищем "ерев"
-    mocked_data = [
-        {
-            "id": 939719570,
-            "state": "EXECUTED",
-            "date": "2018-06-30T02:08:58.425572",
-            "operationAmount": {
-                "amount": "9824.07",
-                "currency": {
-                    "name": "USD",
-                    "code": "USD"
-                }
+@pytest.mark.parametrize(
+    "word, dict_",
+    [
+        ("вкл", [
+            {
+                "id": 587085106,
+                "state": "EXECUTED",
+                "date": "2018-03-23T10:45:06.972075",
+                "operationAmount": {
+                    "amount": "48223.05",
+                    "currency": {
+                        "name": "руб.",
+                        "code": "RUB"
+                    }
+                },
+                "description": "Открытие вклада",
+                "to": "Счет 41421565395219882431"
             },
-            "description": "Перевод организации",
-            "from": "Счет 75106830613657916952",
-            "to": "Счет 11776614605963066702"
-        },
-        {
-            "id": 142264268,
-            "state": "EXECUTED",
-            "date": "2019-04-04T23:20:05.206878",
-            "operationAmount": {
-                "amount": "79114.93",
-                "currency": {
-                    "name": "USD",
-                    "code": "USD"
-                }
-            },
-            "description": "Перевод со счета на счет",
-            "from": "Счет 19708645243227258542",
-            "to": "Счет 75651667383060284188"
-        },
+            {
+                "id": 596171168,
+                "state": "EXECUTED",
+                "date": "2018-07-11T02:26:18.671407",
+                "operationAmount": {
+                    "amount": "79931.03",
+                    "currency": {
+                        "name": "руб.",
+                        "code": "RUB"
+                    }
+                },
+                "description": "Открытие вклада",
+                "to": "Счет 72082042523231456215"
+            }
+        ])
     ]
-
-    assert search_by_pattern('е1р1е1в11111', mocked_data) == mocked_data
+)
+def test_search_by_pattern(list_of_transactions_for_regex, word, dict_):
+    assert search_by_pattern(word, list_of_transactions_for_regex) == dict_
