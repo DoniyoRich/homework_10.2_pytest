@@ -62,10 +62,10 @@
         <p class="text">
             <a id="prevFileLink" class="nav" href="z_145eef247bfb46b6___init___py.html">&#xab; prev</a> &nbsp; &nbsp;
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
-            <a id="nextFileLink" class="nav" href="z_145eef247bfb46b6_generators_py.html">&#xbb; next</a>
+            <a id="nextFileLink" class="nav" href="z_145eef247bfb46b6_external_api_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.6.9">coverage.py v7.6.9</a>,
-            created at 2024-12-07 18:03 +0300
+            created at 2024-12-30 11:49 +0300
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -91,13 +91,13 @@
     <p class="run"><span class="n"><a id="t9" href="#t9">9</a></span><span class="t">    <span class="key">def</span> <span class="nam">wrapper</span><span class="op">(</span><span class="nam">func</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t10" href="#t10">10</a></span><span class="t">        <span class="op">@</span><span class="nam">wraps</span><span class="op">(</span><span class="nam">func</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t11" href="#t11">11</a></span><span class="t">        <span class="key">def</span> <span class="nam">inner</span><span class="op">(</span><span class="op">*</span><span class="nam">args</span><span class="op">,</span> <span class="op">**</span><span class="nam">kwargs</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t12" href="#t12">12</a></span><span class="t">            <span class="nam">start</span> <span class="op">=</span> <span class="str">f"*{func.__name__}* started.\n"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t12" href="#t12">12</a></span><span class="t">            <span class="nam">start</span> <span class="op">=</span> <span class="fst">f"</span><span class="fst">*</span><span class="op">{</span><span class="nam">func</span><span class="op">.</span><span class="nam">__name__</span><span class="op">}</span><span class="fst">* started.\n</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t13" href="#t13">13</a></span><span class="t">            <span class="key">try</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t14" href="#t14">14</a></span><span class="t">                <span class="nam">result</span> <span class="op">=</span> <span class="nam">func</span><span class="op">(</span><span class="op">*</span><span class="nam">args</span><span class="op">,</span> <span class="op">**</span><span class="nam">kwargs</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t15" href="#t15">15</a></span><span class="t">                <span class="nam">result</span> <span class="op">=</span> <span class="str">f"*{func.__name__}* ok. Result is: {result}\n"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t15" href="#t15">15</a></span><span class="t">                <span class="nam">result</span> <span class="op">=</span> <span class="fst">f"</span><span class="fst">*</span><span class="op">{</span><span class="nam">func</span><span class="op">.</span><span class="nam">__name__</span><span class="op">}</span><span class="fst">* ok. Result is: </span><span class="op">{</span><span class="nam">result</span><span class="op">}</span><span class="fst">\n</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t16" href="#t16">16</a></span><span class="t">            <span class="key">except</span> <span class="nam">ZeroDivisionError</span> <span class="key">as</span> <span class="nam">err</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t17" href="#t17">17</a></span><span class="t">                <span class="nam">result</span> <span class="op">=</span> <span class="str">f"*{func.__name__}* error: {err}. Inputs {args}, {kwargs}\n"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t18" href="#t18">18</a></span><span class="t">            <span class="nam">stop</span> <span class="op">=</span> <span class="str">f"*{func.__name__}* stopped."</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t17" href="#t17">17</a></span><span class="t">                <span class="nam">result</span> <span class="op">=</span> <span class="fst">f"</span><span class="fst">*</span><span class="op">{</span><span class="nam">func</span><span class="op">.</span><span class="nam">__name__</span><span class="op">}</span><span class="fst">* error: </span><span class="op">{</span><span class="nam">err</span><span class="op">}</span><span class="fst">. Inputs </span><span class="op">{</span><span class="nam">args</span><span class="op">}</span><span class="fst">, </span><span class="op">{</span><span class="nam">kwargs</span><span class="op">}</span><span class="fst">\n</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t18" href="#t18">18</a></span><span class="t">            <span class="nam">stop</span> <span class="op">=</span> <span class="fst">f"</span><span class="fst">*</span><span class="op">{</span><span class="nam">func</span><span class="op">.</span><span class="nam">__name__</span><span class="op">}</span><span class="fst">* stopped.</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t19" href="#t19">19</a></span><span class="t">            <span class="nam">total_str</span> <span class="op">=</span> <span class="nam">start</span> <span class="op">+</span> <span class="nam">result</span> <span class="op">+</span> <span class="nam">stop</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t20" href="#t20">20</a></span><span class="t">            <span class="key">if</span> <span class="nam">filename</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t21" href="#t21">21</a></span><span class="t">                <span class="key">with</span> <span class="nam">open</span><span class="op">(</span><span class="nam">filename</span><span class="op">,</span> <span class="str">"w"</span><span class="op">)</span> <span class="key">as</span> <span class="nam">f</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -126,10 +126,10 @@
         <p>
             <a class="nav" href="z_145eef247bfb46b6___init___py.html">&#xab; prev</a> &nbsp; &nbsp;
             <a class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
-            <a class="nav" href="z_145eef247bfb46b6_generators_py.html">&#xbb; next</a>
+            <a class="nav" href="z_145eef247bfb46b6_external_api_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.6.9">coverage.py v7.6.9</a>,
-            created at 2024-12-07 18:03 +0300
+            created at 2024-12-30 11:49 +0300
         </p>
     </div>
 </footer>

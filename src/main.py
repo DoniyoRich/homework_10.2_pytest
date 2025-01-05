@@ -1,107 +1,142 @@
-from random import randint
+import os
+from pathlib import Path
 
 from dotenv import load_dotenv
 
-import src.generators
-import src.masks
 import src.processing
-import src.transactions
-import src.widget
 from src.operations import read_from_csv, read_from_excel
-from src.utils import converted_transactions, transaction_amount
+from src.output_data import get_descriptions, print_formatted
+from src.regex_searching import search_by_pattern
+from src.utils import converted_transactions
 
-load_dotenv("../.env")
+dir_path = os.path.dirname(os.path.realpath(__file__))
+BASE_DIR = str(Path(__file__).parent.parent)
+logs_path = os.path.join(dir_path, '..', 'logs', 'main.log')
+transactions_path = BASE_DIR + '\\data'
+
+load_dotenv(BASE_DIR + '\\.env')
+
+file_types = {"1": "JSON", "2": "CSV", "3": "XLSX"}
+transaction_status = ["EXECUTED", "CANCELED", "PENDING"]
 
 
-def start() -> None:
-    """
-    Основная функция программы. Запрашивает строку,
-    содержащую тип и номер карты или счета у Пользователя.
-    Корректность ввода данных проверяется в отдельной функции.
-    """
-    account_or_card = "Maestro 1596837868705199"
+def main() -> None:
+    """ Основная функция программы. """
 
-    account_separated = src.widget.mask_account_card(account_or_card)
-    if account_separated[0] == "Счет":
-        print(f"Счёт {src.masks.get_mask_account(account_separated[1])}")
-    else:
-        print(
-            f"{account_separated[0]} {src.masks.get_mask_card_number(account_separated[1])}"
-        )
+    print("""\nПривет!
+    Добро пожаловать в программу работы с банковскими транзакциями.
+    Выберите необходимый пункт меню (0 для выхода):
+          1. Получить информацию о транзакциях из JSON - файла.
+          2. Получить информацию о транзакциях из CSV - файла.
+          3. Получить информацию о транзакциях из XLSX - файла""")
 
-    date_to_format = "2018-06-30T02:08:58.425572"
-    print(f"Дата: {src.widget.get_date(date_to_format)}")
+    source_file_choice = '0'
+    while True:
+        try:
+            source_file_choice = input("\nИз какого файла брать данные? ")
+            if source_file_choice in file_types or source_file_choice == "0":
+                break
+        except Exception:
+            print("Некорректный ввод, попробуйте еще раз, или 0 для завершения")
+            continue
+        else:
+            print("Пожалуйста, выберите файл, нажав 1, 2, 3 или 0 для завершения")
+            continue
 
-    dict_to_operate = [
-        {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
-        {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
-        {"id": 594226727, "state": "CANCELED", "date": "2018-09-12T21:27:25.241689"},
-        {"id": 615064591, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
-    ]
+    if not source_file_choice == '0':
+        print(f"Для обработки выбран {file_types.get(source_file_choice)}-файл\n")
 
-    # Фильтруем и получаем новый список словарей по ключу 'state'
-    filtered_list = src.processing.filter_by_state(dict_to_operate, "CANCELED")
-    print(f"Исходный список словарей:\n {dict_to_operate}")
-    print(f"Отфильтрованный список словарей по ключу 'state':\n {filtered_list}")
+        transactions_list = []
+        if source_file_choice == '1':
+            file = r'\operations.json'
+            transactions_list = converted_transactions(transactions_path + file)
+        elif source_file_choice == '2':
+            file = r'\transactions.csv'
+            transactions_list = read_from_csv(transactions_path + file)
+        elif source_file_choice == '3':
+            file = r'\transactions_excel.xlsx'
+            transactions_list = read_from_excel(transactions_path + file)
 
-    # Сортируем по ключу 'date'
-    print(
-        f"\nОтсортированный список словарей по ключу 'date':\n, {src.processing.sort_by_date(dict_to_operate, True)}"
-    )
+        print("Введите статус, по которому необходимо выполнить фильтрацию. "
+              "Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING (0 для выхода)")
 
-    # Далее код домашки 11.1 - Генераторы
-    print()
+        transaction_status_choice = '0'
+        while True:
+            try:
+                transaction_status_choice = input("\nСтатус операции: ").upper()
+                if transaction_status_choice in transaction_status or transaction_status_choice == "0":
+                    break
+            except Exception:
+                print("Некорректный ввод, попробуйте еще раз, или 0 для завершения")
+                continue
+            else:
+                print(
+                    f"Статус операции '{transaction_status_choice}' недоступен",
+                    "попробуйте еще раз, или 0 для завершения")
+                continue
 
-    currency = ["USD", "RUB"]
+        if not transaction_status_choice == '0':
+            filtered_by_state = src.processing.filter_by_state(transactions_list, transaction_status_choice)
+            current_state_of_transactions_list = filtered_by_state
+            if filtered_by_state:
+                print(f"Операции отфильтрованы по статусу '{transaction_status_choice}'")
+                is_sorted_by_date_mes = input("\nОтсортировать операции по дате? да/нет(Enter): ")
+                if is_sorted_by_date_mes.lower() == "да" or is_sorted_by_date_mes.lower() == "lf":
 
-    trans_data = src.transactions.transactions
+                    print("Сортировка по дате: да")
 
-    # Получаем итератор, отфильтрованный по ключу 'currency'
+                    is_sort_ascending_mes = input("\nПо возрастанию: да/нет(Enter): ")
+                    if is_sort_ascending_mes.lower() == "да" or is_sort_ascending_mes.lower() == "lf":
+                        is_sort_ascending = False
+                        print("Выбрана сортировка по возрастанию")
+                    else:
+                        print("Выбрана сортировка по убыванию")
+                        is_sort_ascending = True
 
-    filtered_by_currency = src.generators.filter_by_currency(trans_data, currency[0])
-    for element in filtered_by_currency:
-        print(element)
+                    sorted_by_date = src.processing.sort_by_date(filtered_by_state, is_sort_ascending)
+                    current_state_of_transactions_list = sorted_by_date
+                else:
+                    print("Сортировка по дате: нет")
 
-    print()
-    # Получаем текстовые описания транзакций
+                only_roubles = input("\nВыводить только рублевые транзакции? да/нет(Enter): ")
+                if only_roubles.lower() == "да" or only_roubles.lower() == "lf":
+                    print("Только рублевые транзакции: да")
+                    filtered_only_rubles = current_state_of_transactions_list
+                    if file_types.get(source_file_choice) == "JSON":
+                        current_state_of_transactions_list = list(
+                            filter(lambda x: x['operationAmount']['currency']['code'] == 'RUB', filtered_only_rubles))
+                    else:
+                        current_state_of_transactions_list = list(filter(
+                            lambda x: x['currency_code'] == 'RUB',
+                            filtered_only_rubles))
+                else:
+                    print("Только рублевые транзакции: нет")
 
-    descriptions = src.generators.transaction_descriptions(trans_data)
-    for descript_ in descriptions:
-        print(descript_)
+                is_word_to_search = input(
+                    "\nОтфильтровать список транзакций по определенному слову в описании: да/нет(Enter): ")
+                if is_word_to_search.lower() == "да" or is_word_to_search.lower() == "lf":
+                    current_state_of_transactions_list = search_by_pattern(input("Введите слово для поиска: "),
+                                                                           current_state_of_transactions_list)
+                else:
+                    print("Поиск по определенному шаблону не производится")
 
-    print()
-    # Генерируем номера карт в требуемом диапазоне
-    start_card = 1
-    stop_card = 3
-    for card_number in src.generators.card_number_generator(start_card, stop_card):
-        print(card_number)
+                categories = get_descriptions(current_state_of_transactions_list, 'description')
 
-    # Домашка 12.1 JSON, requests, HTTP
-    data_path = '../data/operations.json'
-    # data_path = ''
+                if len(categories):
+                    print("\nРаспечатываю итоговый список транзакций")
+                    print(f'Всего банковских операций в выборке: {sum(categories.values())}')
+                    # categories = get_descriptions(current_state_of_transactions_list)
+                    for key, value in categories.items():
+                        print(f"{key}: {value}")
 
-    # Получаем список словарей из файла json
-    transactions_list = converted_transactions(data_path)
+                    print_formatted(current_state_of_transactions_list, file_types.get(source_file_choice))
+                else:
+                    print('\nНе найдено ни одной транзакции, подходящей под ваши условия фильтрации')
 
-    # Получаем какую-нибудь рандомную транзакцию из ранее полученного списка
-    if transactions_list:
-        some_transaction = transactions_list[round(randint(0, len(transactions_list) - 1))]
-        print(transaction_amount(some_transaction))
-    else:
-        print("Данных нет")
-
-    # Домашка по csv и pandas
-    print()
-    start_dir = '../data/'
-    files_to_read = ['transactions.csv', 'transactions_excel.xlsx']
-
-    csv_dataset = read_from_csv(start_dir + files_to_read[0])
-    print(csv_dataset)
-    print()
-
-    excel_dataset = read_from_excel(start_dir + files_to_read[1])
-    print(excel_dataset)
+            else:
+                print("-" * 40)
+                print(f"Транзакции со статусом {transaction_status_choice} отсутствуют")
 
 
 if __name__ == "__main__":
-    start()
+    main()

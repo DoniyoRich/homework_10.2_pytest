@@ -35,4 +35,5 @@ def test_log_decorator_console_zero(capsys):
 
     my_function(6, 0)
     captured = capsys.readouterr()
-    assert captured.out == "*my_function* started.\n*my_function* error: division by zero. Inputs (6, 0), {}\n*my_function* stopped.\n"
+    assert captured.out == ("*my_function* started.\n"
+                            "*my_function* error: division by zero. Inputs (6, 0), {}\n*my_function* stopped.\n")

@@ -22,8 +22,8 @@ def read_from_csv(file_path: str) -> list[dict]:
             reader = csv.DictReader(file_name, delimiter=';')
             operations_logger.info(f"Успешное чтение файла {file_path}")
             return list(reader)
-    except FileNotFoundError:
-        operations_logger.error(f"Ошибка чтения файла {file_path}")
+    except FileNotFoundError as e:
+        operations_logger.error(f"Ошибка чтения файла {file_path} {e}")
         return []
 
 
